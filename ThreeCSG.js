@@ -1,6 +1,5 @@
 'use strict';
 window.ThreeBSP = (function() {
-
     var ThreeBSP,
         EPSILON = 1e-5,
         COPLANAR = 0,
@@ -9,11 +8,8 @@ window.ThreeBSP = (function() {
         SPANNING = 3;
 
     ThreeBSP = function( object ) {
-
         this.matrix = new THREE.Matrix4();
-
         this.create( object );
-
     };
 
     ThreeBSP.prototype.subtract = function( other_tree ) {
@@ -64,7 +60,7 @@ window.ThreeBSP = (function() {
         return a;
     };
 
-    ThreeBSP.prototype.create = function( object ){
+    ThreeBSP.prototype.create = function( object ) {
         if ( object instanceof THREE.Geometry ) {
             this.fromGeometry( object );
         } else if ( object instanceof THREE.BufferGeometry ) {
@@ -76,7 +72,7 @@ window.ThreeBSP = (function() {
             this.tree = object;
             return this;
         } else {
-            throw new Error('ThreeBSP: is unable to create a BSP for the given input');
+            throw new Error( 'ThreeBSP: is unable to create a BSP for the given input' );
         }
     };
 
@@ -109,8 +105,7 @@ window.ThreeBSP = (function() {
                 vertex = polygon.vertices[0];
                 vertexUvs.push( new THREE.Vector2( vertex.uv.x, vertex.uv.y ) );
                 vertex = new THREE.Vector3( vertex.x, vertex.y, vertex.z );
-                vertex.applyMatrix4(matrix);
-
+                vertex.applyMatrix4( matrix );
                 if ( typeof vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ] !== 'undefined' ) {
                     vertex_idx_a = vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ];
                 } else {
@@ -118,10 +113,10 @@ window.ThreeBSP = (function() {
                     vertex_idx_a = vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ] = geometry.vertices.length - 1;
                 }
 
-                vertex = polygon.vertices[j-1];
+                vertex = polygon.vertices[j - 1];
                 vertexUvs.push( new THREE.Vector2( vertex.uv.x, vertex.uv.y ) );
                 vertex = new THREE.Vector3( vertex.x, vertex.y, vertex.z );
-                vertex.applyMatrix4(matrix);
+                vertex.applyMatrix4( matrix );
                 if ( typeof vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ] !== 'undefined' ) {
                     vertex_idx_b = vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ];
                 } else {
@@ -132,7 +127,7 @@ window.ThreeBSP = (function() {
                 vertex = polygon.vertices[j];
                 vertexUvs.push( new THREE.Vector2( vertex.uv.x, vertex.uv.y ) );
                 vertex = new THREE.Vector3( vertex.x, vertex.y, vertex.z );
-                vertex.applyMatrix4(matrix);
+                vertex.applyMatrix4( matrix );
                 if ( typeof vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ] !== 'undefined' ) {
                     vertex_idx_c = vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ];
                 } else {
@@ -176,48 +171,50 @@ window.ThreeBSP = (function() {
                 vertexUvs = [];
 
                 vertex = polygon.vertices[0];
-                vertex.clone().applyMatrix4( matrix ); // TODO: check if clone is needed here
                 uvs.push( vertex.uv.x, vertex.uv.y );
+                vertex = new THREE.Vector3( vertex.x, vertex.y, vertex.z );
+                vertex.applyMatrix4( matrix );
                 if ( typeof vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ] !== 'undefined' ) {
                     vertex_idx_a = vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ];
                 } else {
                     positions.push( vertex.x, vertex.y, vertex.z );
                     vertex_idx_a = vertex_count;
                     normals.push( polygon.normal.x, polygon.normal.y, polygon.normal.z );
-                    vertex_count ++;
+                    vertex_count++;
                 }
 
-                vertex = polygon.vertices[j-1];
-                vertex.clone().applyMatrix4( matrix ); // TODO: check if clone is needed here
+                vertex = polygon.vertices[j - 1];
                 uvs.push( vertex.uv.x, vertex.uv.y );
+                vertex = new THREE.Vector3( vertex.x, vertex.y, vertex.z );
+                vertex.applyMatrix4( matrix );
                 if ( typeof vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ] !== 'undefined' ) {
                     vertex_idx_b = vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ];
                 } else {
                     positions.push( vertex.x, vertex.y, vertex.z );
                     vertex_idx_b = vertex_count;
                     normals.push( polygon.normal.x, polygon.normal.y, polygon.normal.z );
-                    vertex_count ++;
+                    vertex_count++;
                 }
 
                 vertex = polygon.vertices[j];
-                vertex.clone().applyMatrix4( matrix ); // TODO: check if clone is needed here
                 uvs.push( vertex.uv.x, vertex.uv.y );
+                vertex = new THREE.Vector3( vertex.x, vertex.y, vertex.z );
+                vertex.applyMatrix4( matrix );
                 if ( typeof vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ] !== 'undefined' ) {
                     vertex_idx_c = vertex_dict[ vertex.x + ',' + vertex.y + ',' + vertex.z ];
                 } else {
                     positions.push( vertex.x, vertex.y, vertex.z );
                     vertex_idx_c = vertex_count;
                     normals.push( polygon.normal.x, polygon.normal.y, polygon.normal.z );
-                    vertex_count ++;
+                    vertex_count++;
                 }
 
                 indices.push( vertex_idx_a, vertex_idx_b, vertex_idx_c );
             }
         }
-        geometry.addAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
-        geometry.addAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
-        geometry.addAttribute('normal', new THREE.BufferAttribute(new Float32Array(normals), 3));
-        //geometry.addAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
+        geometry.addAttribute('uv', new THREE.BufferAttribute(new Float32Array( uvs ), 2));
+        geometry.addAttribute('position', new THREE.BufferAttribute(new Float32Array( positions ), 3));
+        geometry.addAttribute('normal', new THREE.BufferAttribute(new Float32Array( normals ), 3));
         geometry.setIndex( new THREE.BufferAttribute( new Uint32Array( indices ), 1 ) );
 
         return geometry;
@@ -233,7 +230,7 @@ window.ThreeBSP = (function() {
         return mesh;
     };
 
-    ThreeBSP.prototype.fromGeometry = function( geometry ){
+    ThreeBSP.prototype.fromGeometry = function( geometry ) {
         // Convert THREE.Geometry to ThreeBSP
         var i, _length_i,
             face, vertex, faceVertexUvs, uvs,
@@ -248,19 +245,19 @@ window.ThreeBSP = (function() {
             vertex = geometry.vertices[ face.a ];
             uvs = faceVertexUvs ? new THREE.Vector2( faceVertexUvs[0].x, faceVertexUvs[0].y ) : null;
             vertex = new ThreeBSP.Vertex( vertex.x, vertex.y, vertex.z, face.vertexNormals[0], uvs );
-            vertex.applyMatrix4(this.matrix);
+            vertex.applyMatrix4( this.matrix );
             polygon.vertices.push( vertex );
 
             vertex = geometry.vertices[ face.b ];
             uvs = faceVertexUvs ? new THREE.Vector2( faceVertexUvs[1].x, faceVertexUvs[1].y ) : null;
             vertex = new ThreeBSP.Vertex( vertex.x, vertex.y, vertex.z, face.vertexNormals[1], uvs );
-            vertex.applyMatrix4(this.matrix);
+            vertex.applyMatrix4( this.matrix );
             polygon.vertices.push( vertex );
 
             vertex = geometry.vertices[ face.c ];
             uvs = faceVertexUvs ? new THREE.Vector2( faceVertexUvs[2].x, faceVertexUvs[2].y ) : null;
             vertex = new ThreeBSP.Vertex( vertex.x, vertex.y, vertex.z, face.vertexNormals[2], uvs );
-            vertex.applyMatrix4(this.matrix);
+            vertex.applyMatrix4( this.matrix );
             polygon.vertices.push( vertex );
 
             polygon.calculateProperties();
@@ -270,28 +267,30 @@ window.ThreeBSP = (function() {
         this.tree = new ThreeBSP.Node( polygons );
     };
 
-    ThreeBSP.prototype.fromIndexedBufferGeometry = function( geometry ){
+    ThreeBSP.prototype.fromIndexedBufferGeometry = function( geometry ) {
         var i, il, index, vertex, polygon,
             indices = geometry.index.array,
             positions = geometry.attributes.position.array,
+            normals = geometry.attributes.normal.array,
+            uvs = geometry.attributes.uv.array,
             polygons = [];
 
-        for( i = 0, il = indices.length; i < il; i+=3 ){
+        for( i = 0, il = indices.length; i < il; i += 3 ) {
             polygon = new ThreeBSP.Polygon();
 
             index = indices[i];
-            vertex = new ThreeBSP.Vertex( positions[ index * 3 ], positions[ index * 3 + 1 ], positions[ index * 3 + 2 ] );
-            vertex.applyMatrix4(this.matrix);
+            vertex = new ThreeBSP.Vertex( positions[index * 3], positions[index * 3 + 1], positions[index * 3 + 2], normals ? new THREE.Vector3( normals[index * 3], normals[index * 3 + 1], normals[index * 3 + 2] ) : null, uvs ? new THREE.Vector2( uvs[index * 2], uvs[index * 2 + 1] ) : null );
+            vertex.applyMatrix4( this.matrix );
             polygon.vertices.push( vertex );
 
-            index = indices[i+1];
-            vertex = new ThreeBSP.Vertex( positions[ index * 3 ], positions[ index * 3 + 1 ], positions[ index * 3 + 2 ] );
-            vertex.applyMatrix4(this.matrix);
+            index = indices[i + 1];
+            vertex = new ThreeBSP.Vertex( positions[index * 3], positions[index * 3 + 1], positions[index * 3 + 2], normals ? new THREE.Vector3( normals[index * 3], normals[index * 3 + 1], normals[index * 3 + 2] ) : null, uvs ? new THREE.Vector2( uvs[index * 2], uvs[index * 2 + 1] ) : null );
+            vertex.applyMatrix4( this.matrix );
             polygon.vertices.push( vertex );
 
-            index = indices[i+2];
-            vertex = new ThreeBSP.Vertex( positions[ index * 3 ], positions[ index * 3 + 1 ], positions[ index * 3 + 2 ] );
-            vertex.applyMatrix4(this.matrix);
+            index = indices[i + 2];
+            vertex = new ThreeBSP.Vertex( positions[index * 3], positions[index * 3 + 1], positions[index * 3 + 2], normals ? new THREE.Vector3( normals[index * 3], normals[index * 3 + 1], normals[index * 3 + 2] ) : null, uvs ? new THREE.Vector2( uvs[index * 2], uvs[index * 2 + 1] ) : null );
+            vertex.applyMatrix4( this.matrix );
             polygon.vertices.push( vertex );
 
             polygon.calculateProperties();
@@ -300,42 +299,41 @@ window.ThreeBSP = (function() {
         this.tree = new ThreeBSP.Node( polygons );
     };
 
-    ThreeBSP.prototype.fromNonIndexedBufferGeometry = function( geometry ){
-        var i, il, index, vertex, polygon,
+    ThreeBSP.prototype.fromNonIndexedBufferGeometry = function( geometry ) {
+        var i, j, il, index, vertex, polygon,
             positions = geometry.attributes.position.array,
+            normals = geometry.attributes.normal.array,
+            uvs = geometry.attributes.uv.array,
             polygons = [];
 
-        for( i = 0, il = positions.length; i < il; i+=9 ){
+        for( i = 0, j = 0, il = positions.length; i < il; i += 9 ) {
             polygon = new ThreeBSP.Polygon();
 
-            vertex = new ThreeBSP.Vertex( positions[ i ], positions[ i + 1 ], positions[ i + 2 ] );
-            vertex.applyMatrix4(this.matrix);
+            vertex = new ThreeBSP.Vertex( positions[i], positions[i + 1], positions[i + 2], normals ? new THREE.Vector3( normals[i], normals[i + 1], normals[i + 2] ) : null, uvs ? new THREE.Vector2( uvs[j], uvs[j + 1] ) : null );
+            vertex.applyMatrix4( this.matrix );
             polygon.vertices.push( vertex );
 
-            vertex = new ThreeBSP.Vertex( positions[ i + 3 ], positions[ i + 4 ], positions[ i + 5 ] );
-            vertex.applyMatrix4(this.matrix);
+            vertex = new ThreeBSP.Vertex( positions[i + 3], positions[i + 4], positions[i + 5], normals ? new THREE.Vector3( normals[i + 3], normals[i + 4], normals[i + 5] ) : null, uvs ? new THREE.Vector2( uvs[j + 2], uvs[j + 3] ) : null );
+            vertex.applyMatrix4( this.matrix );
             polygon.vertices.push( vertex );
 
-            vertex = new ThreeBSP.Vertex( positions[ i + 6 ], positions[ i + 7 ], positions[ i + 8 ] );
-            vertex.applyMatrix4(this.matrix);
+            vertex = new ThreeBSP.Vertex( positions[i + 6], positions[i + 7], positions[i + 8], normals ? new THREE.Vector3( normals[i + 6], normals[i + 7], normals[i + 8] ) : null, uvs ? new THREE.Vector2( uvs[j + 4], uvs[j + 5] ) : null );
+            vertex.applyMatrix4( this.matrix );
             polygon.vertices.push( vertex );
 
             polygon.calculateProperties();
             polygons.push( polygon );
+
+            j += 6;
         }
         this.tree = new ThreeBSP.Node( polygons );
     };
 
-    ThreeBSP.prototype.fromBufferGeometry = function( geometry ){
-
-        if( geometry.index === null ){
-
+    ThreeBSP.prototype.fromBufferGeometry = function( geometry ) {
+        if( geometry.index === null ) {
             this.fromNonIndexedBufferGeometry( geometry );
-
-        }else{
-
+        } else {
             this.fromIndexedBufferGeometry( geometry );
-
         }
     };
 
@@ -435,19 +433,15 @@ window.ThreeBSP = (function() {
         var classification = this.classifySide( polygon );
 
         if ( classification === COPLANAR ) {
-
             ( this.normal.dot( polygon.normal ) > 0 ? coplanar_front : coplanar_back ).push( polygon );
 
         } else if ( classification === FRONT ) {
-
             front.push( polygon );
 
         } else if ( classification === BACK ) {
-
             back.push( polygon );
 
         } else {
-
             var vertex_count,
                 i, j, ti, tj, vi, vj,
                 t, v,
@@ -471,7 +465,6 @@ window.ThreeBSP = (function() {
                     b.push( v );
                 }
             }
-
 
             if ( f.length >= 3 ) front.push( new ThreeBSP.Polygon( f ).calculateProperties() );
             if ( b.length >= 3 ) back.push( new ThreeBSP.Polygon( b ).calculateProperties() );
@@ -557,20 +550,25 @@ window.ThreeBSP = (function() {
         return this.clone().lerp( other, t );
     };
 
-    ThreeBSP.Vertex.prototype.applyMatrix4 = function ( m ) {
-
+    ThreeBSP.Vertex.prototype.applyMatrix4 = function( m ) {
         // input: THREE.Matrix4 affine matrix
 
         var x = this.x, y = this.y, z = this.z;
 
         var e = m.elements;
+        var w = 1 / (e[3] * x + e[7] * y + e[11] * z + e[15]);
 
-        this.x = e[0] * x + e[4] * y + e[8]  * z + e[12];
-        this.y = e[1] * x + e[5] * y + e[9]  * z + e[13];
-        this.z = e[2] * x + e[6] * y + e[10] * z + e[14];
+        if ( isFinite( w ) ) {
+            this.x = (e[0] * x + e[4] * y + e[8]  * z + e[12]) * w;
+            this.y = (e[1] * x + e[5] * y + e[9]  * z + e[13]) * w;
+            this.z = (e[2] * x + e[6] * y + e[10] * z + e[14]) * w;
+        } else {
+            this.x = 0;
+            this.y = 0;
+            this.z = 0;
+        }
 
         return this;
-
     };
 
     ThreeBSP.Node = function( polygons ) {
@@ -678,7 +676,6 @@ window.ThreeBSP = (function() {
 
         front = [];
         back = [];
-
         for ( i = 0, polygon_count = polygons.length; i < polygon_count; i++ ) {
             this.divider.splitPolygon( polygons[i], front, back, front, back );
         }
@@ -697,5 +694,4 @@ window.ThreeBSP = (function() {
     };
 
     return ThreeBSP;
-
 })();
