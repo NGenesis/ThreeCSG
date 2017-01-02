@@ -271,8 +271,8 @@ window.ThreeBSP = (function() {
 		var i, il, index, vertex, polygon,
 			indices = geometry.index.array,
 			positions = geometry.attributes.position.array,
-			normals = geometry.attributes.normal.array,
-			uvs = geometry.attributes.uv.array,
+			normals = geometry.attributes.normal ? geometry.attributes.normal.array : null,
+			uvs = geometry.attributes.uv ? geometry.attributes.uv.array : null,
 			polygons = [];
 
 		for( i = 0, il = indices.length; i < il; i += 3 ) {
@@ -302,8 +302,8 @@ window.ThreeBSP = (function() {
 	ThreeBSP.prototype.fromNonIndexedBufferGeometry = function( geometry ) {
 		var i, j, il, index, vertex, polygon,
 			positions = geometry.attributes.position.array,
-			normals = geometry.attributes.normal.array,
-			uvs = geometry.attributes.uv.array,
+			normals = geometry.attributes.normal ? geometry.attributes.normal.array : null,
+			uvs = geometry.attributes.uv ? geometry.attributes.uv.array : null,
 			polygons = [];
 
 		for( i = 0, j = 0, il = positions.length; i < il; i += 9 ) {
