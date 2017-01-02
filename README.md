@@ -1,3 +1,12 @@
 ### My own little fork
 
-Just for some minor bug fixing...
+Changes:
+
+- Cleaned up code (typos and syntax)
+
+- Removed THREE.Face4 support
+
+- Added THREE.BufferGeometry support
+
+
+
