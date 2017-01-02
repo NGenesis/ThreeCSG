@@ -153,7 +153,7 @@ window.ThreeBSP = (function() {
 		var i, j,
 			matrix = new THREE.Matrix4().getInverse( this.matrix ),
 			geometry = new THREE.BufferGeometry(),
-			indices = [], positions = [], colors = [], normals = [], uvs = [],
+			indices = [], positions = [], normals = [], uvs = [],
 			polygons = this.tree.allPolygons(),
 			polygon_count = polygons.length,
 			polygon, polygon_vertex_count,
@@ -300,7 +300,7 @@ window.ThreeBSP = (function() {
 	};
 
 	ThreeBSP.prototype.fromNonIndexedBufferGeometry = function( geometry ) {
-		var i, j, il, index, vertex, polygon,
+		var i, j, il, vertex, polygon,
 			positions = geometry.attributes.position.array,
 			normals = geometry.attributes.normal ? geometry.attributes.normal.array : null,
 			uvs = geometry.attributes.uv ? geometry.attributes.uv.array : null,
