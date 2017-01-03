@@ -8,7 +8,7 @@ Constructive Solid Geometry (CSG) is a modeling technique that uses Boolean oper
 ## Notes
 Tested against three.js [r83](https://github.com/mrdoob/three.js/releases/tag/r83).
 
-This branch provides support for BufferGeometry, and preserves vertex normal and UV (channel 1) data between operations.
+This fork provides support for BufferGeometry, and preserves vertex normal and UV (channel 1) data between operations.
 
 ## Author Attribution
 * [chandlerprall](https://github.com/chandlerprall) ([ThreeCSG](https://github.com/chandlerprall/ThreeCSG))
