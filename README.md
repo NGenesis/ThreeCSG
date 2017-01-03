@@ -15,5 +15,5 @@ This fork provides support for BufferGeometry, and preserves vertex normal and U
 * [evanw](https://github.com/evanw) ([csg.js](https://github.com/evanw/csg.js))
 
 ## License
-* ThreeCSG is provided under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
-* csg.js is Copyright (c) 2011 Evan Wallace (http://madebyevan.com/), and provided under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+* ThreeCSG is Copyright (c) 2012 Chandler Prall, and provided under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+* csg.js is Copyright (c) 2011 Evan Wallace, and provided under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
