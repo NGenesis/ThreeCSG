@@ -434,13 +434,10 @@ window.ThreeBSP = (function() {
 
 		if ( classification === COPLANAR ) {
 			( this.normal.dot( polygon.normal ) > 0 ? coplanar_front : coplanar_back ).push( polygon );
-
 		} else if ( classification === FRONT ) {
 			front.push( polygon );
-
 		} else if ( classification === BACK ) {
 			back.push( polygon );
-
 		} else {
 			var vertex_count,
 				i, j, ti, tj, vi, vj,
